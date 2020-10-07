@@ -20,7 +20,7 @@ with open('Data1000Movies.csv', 'r') as f:
                 image_url = data["Poster"]
             except KeyError:
                 pass
-            print(data)
+
             row.append(image_url)
             all.append(row)
 

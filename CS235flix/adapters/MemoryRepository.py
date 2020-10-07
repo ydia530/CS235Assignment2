@@ -56,13 +56,24 @@ class MemoryRepository(AbstractRepository):
             movie = self._movies[-1]
         return movie
 
+    def get_genres(self):
+        return self._genres
+
+
     def get_movies_by_rank(self, rank_list):
         # Strip out any ranks in rank_list that don't represent movie ranks in the repository.
         existing_ranks = [rank for rank in rank_list if rank in self._movie_index]
-
         # Fetch the movies.
         movies = [self._movie_index[rank] for rank in existing_ranks]
         return movies
+
+    @property
+    def genres(self):
+        return self._genres
+
+    @genres.setter
+    def genres(self, value):
+        self._genres.append(value)
 
 
 def read_csv_file(filename: str):
@@ -81,13 +92,21 @@ def read_csv_file(filename: str):
 
 def load_movies_and_genre(data_path: str, repo: MemoryRepository):
     for data_row in read_csv_file(os.path.join(data_path, 'Data1000MoviesWithImg.csv')):
-        movie_rank = int(data_row[0])
         movie_genre = data_row[2].split(",")
+        movie_actor = data_row[2].split(",")
 
         # Create Movie object.
         movie = Movie(data_row[1], int(data_row[6]))
+        for g in movie_genre:
+            gen =  Genre(g)
+            movie.genres = gen
+            if gen not in repo.genres:
+                repo.genres = gen
+
         movie.genres = movie_genre
-        movie.rank = movie_rank
+        movie.rank = int(data_row[0])
+        if data_row[-1]:
+            movie.poster = data_row[-1]
 
         # Add the Movie to the repository.
         repo.add_movie(movie)

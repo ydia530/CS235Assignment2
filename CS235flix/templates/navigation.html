@@ -1,10 +1,8 @@
 <nav id="nav">
-  <img id="logo" src="{{ url_for('static', filename='covid-19.png') }}" />
-
-  <h2 id="nav-header">
+    <h2 id="nav-header">
     {% if 'username' in session %} Hello, {{ session['username'] }} {%
     endif %}
-  </h2>
+    </h2>
   <a class="btn-nav" href="{{ url_for('home_bp.home') }}">Home</a>
   <a class="btn-nav" href="">Register</a>
   <a class="btn-nav" href="">Login</a>
@@ -18,14 +16,14 @@
     </h3>
   </div>
 
-  <div>
-    <h3 id="sub-nav-header">Browse by tag</h3>
-    {% for key in tag_urls %}
-      <a class="btn-nav" href="">{{ key }}</a>
+  <h3 id="sub-nav-header">Browse by tag</h3>
+  <div class="genre">
+    {% for key in genre_urls %}
+      <a class="btn-nav-genre" href="">{{ key }}</a>
     {% endfor %}
   </div>
 
   <div id="nav-footer">
-    COMPSCI 235 Software Development Methodologies
+    COMPSCI 235 Assignment 2 ydia530
   </div>
 </nav>

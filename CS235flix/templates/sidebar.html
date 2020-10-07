@@ -1,16 +1,20 @@
 <aside id="sidebar">
 
     <header>
-        <h1>Editor's picks</h1>
+        <h1>Recommend movies</h1>
     </header>
 
-    {% for article in selected_articles %}
-        <div id="article-container">
-            <a href="{{ article.hyperlink }}" >
-                <img src={{ article.image_hyperlink }} class="img-small">
+    {% for movie in selected_movies %}
+        <div id="movie-container">
+            <a href="" >
+                {% if movie.poster is not none %}
+                <img src={{ movie.poster }} class="img-small">
+                {% else %}
+                <img src=https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png class="img-small">
+                {% endif %}
             </a>
-            <div id="article-description">
-                <p>{{ article.title }}, ({{ article.date }}).</p>
+            <div id="movie-description">
+                <p>{{ movie.title }}（{{ movie.year }})</p>
             </div>
         </div>
     {% endfor %}

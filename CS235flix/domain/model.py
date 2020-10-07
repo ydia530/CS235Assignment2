@@ -116,6 +116,16 @@ class Movie:
         self.__revenue = 'N/A'
         self.__metascore = None
         self.__rank = None
+        self.__poster = None
+
+    @property
+    def poster(self) -> str:
+        return self.__poster
+
+    @poster.setter
+    def poster(self, url):
+        if type(url) is str:
+            self.__poster = url
 
     @property
     def title(self) -> str:
@@ -164,9 +174,15 @@ class Movie:
     @property
     def runtime_minutes(self) -> int:
         return self.__runtime_minutes
+
     @property
     def rank(self) -> int:
         return self.__rank
+
+    @rank.setter
+    def rank(self, ran):
+        if type(ran) is int:
+            self.__rank = ran
 
     @runtime_minutes.setter
     def runtime_minutes(self, time: int):
@@ -244,9 +260,6 @@ class Movie:
     def votes_the_movie(self):
         self.__votes += 1
 
-    @rank.setter
-    def rank(self, value):
-        self._rank = value
 
 
 class Review:

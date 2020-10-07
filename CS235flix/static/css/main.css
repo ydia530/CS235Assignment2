@@ -31,7 +31,7 @@ img {
 
 .img-small {
     display: block;
-    width: 300px;
+    width: 250px;
     height: auto;
     padding: 5px;
     margin-left: auto;
@@ -50,6 +50,37 @@ img {
 .btn-nav:hover {
   background-color: #594f8d;
   color: #fff;
+}
+
+.btn-nav-genre{
+  padding: 5px;
+  border-bottom: 1px solid #bdb8d7;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  color: #bdb8d7;
+  display: block;
+}
+.btn-nav-genre:hover {
+  background-color: #594f8d;
+  color: #fff;
+}
+
+.genre {
+  width: 200px;
+  height: 500px;
+  border: 1px dotted black;
+  overflow-y: scroll; /* Add the ability to scroll */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.genre::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.genre{
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 .btn-general {
@@ -166,24 +197,25 @@ img {
     height: 100%;
     padding: 20px;
     border-bottom: 1px solid #e0e4e8;
+    text-align: center;
 }
 
-#article-header {
+#movie-header {
     text-align: left;
     margin-top: 20px;
     margin-bottom: 20px;
 }
 
-#article {
+#movie {
     clear:both;
     margin-bottom:100px;
 }
 
-#article-footer {
+#movie-footer {
     font-size: 32px;
 }
 
-#article-container {
+#movie-container {
     padding: 20px;
     display: flex;
     flex-direction: column;
