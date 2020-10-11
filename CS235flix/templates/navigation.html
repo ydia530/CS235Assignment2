@@ -4,22 +4,23 @@
     endif %}
     </h2>
   <a class="btn-nav" href="{{ url_for('home_bp.home') }}">Home</a>
-  <a class="btn-nav" href="">Register</a>
-  <a class="btn-nav" href="">Login</a>
-  <a class="btn-nav" href="">Logout</a>
+  <a class="btn-nav" href="{{ url_for('authentication_bp.register') }}">Register</a>
+  <a class="btn-nav" href="{{ url_for('authentication_bp.login') }}">Login</a>
+  <a class="btn-nav" href="{{ url_for('authentication_bp.logout') }}">Logout</a>
+  <a class="btn-nav" href="{{ url_for('search_bp.search') }}">Search</a>
 
   <div>
-    <h3>‹
-      <a class="btn-nav" href="">
+    <h3>
+      <a class="btn-nav" href="{{ url_for('movies_bp.movies_by_year') }}">
         Browse timeline
       </a>
     </h3>
   </div>
 
-  <h3 id="sub-nav-header">Browse by tag</h3>
+  <h3 id="sub-nav-header">Browse by genre</h3>
   <div class="genre">
     {% for key in genre_urls %}
-      <a class="btn-nav-genre" href="">{{ key }}</a>
+      <a class="btn-nav-genre" href="{{genre_urls[key]}}">{{ key }}</a>
     {% endfor %}
   </div>
 

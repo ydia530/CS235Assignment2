@@ -1,7 +1,7 @@
 import abc
 from typing import List
 
-from CS235flix.domain.model import Movie, User, Genre, Review
+from CS235flix.domain.model import Movie, User, Genre
 
 repo_instance = None
 
@@ -13,6 +13,9 @@ class RepositoryException(Exception):
 
 
 class AbstractRepository(abc.ABC):
+
+    def __init__(self):
+        self.years = None
 
     @abc.abstractmethod
     def add_user(self, user: User):
@@ -71,8 +74,68 @@ class AbstractRepository(abc.ABC):
 
     @abc.abstractmethod
     def get_genres(self) -> List[Genre]:
-
         """ Returns the genre stored in the repository. """
 
         raise NotImplementedError
 
+    @abc.abstractmethod
+    def get_movies_by_year(self, target_year):
+        """ Returns movies stored in the repository at target year. """
+
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_year_of_previous_movie(self, param):
+        """ Returns movies stored in the repository at previous year. """
+
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_year_of_next_movie(self, param):
+        """ Returns movies stored in the repository at next year. """
+
+        raise NotImplementedError
+
+    def add_review(self, review):
+        """   add reviews   """
+
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_movie_ranks_for_genre(self, genre_name: str):
+        """
+        Returns a list of ranks representing  movies that are genre by genre_name.
+        If there are no Movies that are genreged by genre_name, this method returns an empty list.
+
+        """
+
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_movies_by_actor(self, actor_name: str):
+        """
+        Returns a list of movie that are contain a specific actor.
+        If there are no Movies there, this method returns an empty list.
+
+        """
+
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_movies_by_director(self, director_name: str):
+        """
+        Returns a list of movie that are contain a specific director.
+        If there are no Movies there, this method returns an empty list.
+
+        """
+
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_movies_by_movie_title(self, movie_title: str):
+        """
+        Returns a list of movie that are contain a specific movie title.
+        If there are no Movies there, this method returns an empty list.
+
+        """
+        raise NotImplementedError

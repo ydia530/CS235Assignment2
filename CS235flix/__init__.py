@@ -5,7 +5,7 @@ import os
 from flask import Flask
 
 import CS235flix.adapters.repository as repo
-from CS235flix.adapters.MemoryRepository import MemoryRepository, populate
+from CS235flix.adapters.MemoryRepository import memoryRepository, populate
 
 
 def create_app(test_config=None):
@@ -24,7 +24,7 @@ def create_app(test_config=None):
         data_path = app.config['TEST_DATA_PATH']
 
     # Create the MemoryRepository implementation for a memory-based repository.
-    repo.repo_instance = MemoryRepository()
+    repo.repo_instance = memoryRepository()
     populate(data_path, repo.repo_instance)
 
     # Build the application - these steps require an application context.
@@ -32,6 +32,15 @@ def create_app(test_config=None):
         # Register blueprints.
         from .home import home
         app.register_blueprint(home.home_blueprint)
+
+        from .authentication import authentication
+        app.register_blueprint(authentication.authentication_blueprint)
+
+        from .movie_blueprint import movies
+        app.register_blueprint(movies.movies_blueprint)
+
+        from .search import search
+        app.register_blueprint(search.search_blueprint)
 
 
     return app

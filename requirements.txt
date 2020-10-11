@@ -3,3 +3,5 @@ flask-wtf==0.14.2
 python-dotenv==0.13.0
 Werkzeug==0.16.0
 
+WTForms~=2.3.3
+requests~=2.24.0

@@ -2,7 +2,7 @@ import csv
 import requests
 
 with open('Data1000Movies.csv', 'r') as f:
-    with open('Data1000MoviesWithImg.csv', 'w') as ff:
+    with open('Data1000MoviesWithImage.csv', 'w') as ff:
         writer = csv.writer(ff, lineterminator='\n')
         reader = csv.reader(f)
         all = []
@@ -15,6 +15,7 @@ with open('Data1000Movies.csv', 'r') as f:
             payload = {"t": row[1], "y": row[6]}
             r = requests.get(url=url, params=payload)
             data = r.json()
+            print(row)
             image_url = ""
             try:
                 image_url = data["Poster"]

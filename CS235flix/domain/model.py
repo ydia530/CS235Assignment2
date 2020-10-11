@@ -2,6 +2,10 @@ from typing import List, Iterable
 from datetime import datetime
 
 
+class ModelException(Exception):
+    pass
+
+
 class Actor:
     def __init__(self, Actor_full_name: str):
         if Actor_full_name == "" or type(Actor_full_name) is not str:
@@ -10,8 +14,18 @@ class Actor:
             self.__actor_full_name = Actor_full_name.strip()
         self.__colleagues: List[Actor] = list()
 
+        self.__movies = list()
+
     @property
-    def director_full_name(self) -> str:
+    def movies(self):
+        return self.__movies
+
+    @movies.setter
+    def movies(self, movie):
+        self.__movies.append(movie)
+
+    @property
+    def actor_full_name(self) -> str:
         return self.__actor_full_name
 
     def __repr__(self):
@@ -48,6 +62,16 @@ class Director:
         else:
             self.__director_full_name = director_full_name.strip()
 
+        self.__movies = list()
+
+    @property
+    def movies(self):
+        return self.__movies
+
+    @movies.setter
+    def movies(self, movie: 'Movie'):
+        self.__movies.append(movie)
+
     @property
     def director_full_name(self) -> str:
         return self.__director_full_name
@@ -74,6 +98,23 @@ class Genre:
         else:
             self.__genre_name = genre_name.strip()
 
+        self.__genre_movies: List[Movie] = list()
+
+    @property
+    def genre_movies(self) -> Iterable['Movie']:
+        return self.__genre_movies
+
+    @genre_movies.setter
+    def genre_movies(self, value):
+        self.__genre_movies.append(value)
+
+    @property
+    def number_of_genre_movies(self) -> int:
+        return len(self.__genre_movies)
+
+    def is_applied_to(self, movie: 'Movie') -> bool:
+        return movie in self.__genre_movies
+
     @property
     def genre_name(self) -> str:
         return self.__genre_name
@@ -91,6 +132,9 @@ class Genre:
 
     def __hash__(self):
         return hash(self.__genre_name)
+
+    def add_movie(self, movie):
+        self.__genre_movies.append(movie)
 
 
 class Movie:
@@ -117,6 +161,18 @@ class Movie:
         self.__metascore = None
         self.__rank = None
         self.__poster = None
+        self.__reviews: List[Review] = list()
+
+    def add_review(self, review: 'Review'):
+        self.__reviews.append(review)
+
+    @property
+    def reviews(self) -> Iterable["Review"]:
+        return self.__reviews
+
+    @reviews.setter
+    def reviews(self, r: 'Review'):
+        self.__reviews.append(r)
 
     @property
     def poster(self) -> str:
@@ -154,7 +210,7 @@ class Movie:
             self.__director = d
 
     @property
-    def actors(self) -> Iterable["Actor"]:
+    def actors(self) -> Iterable[Actor]:
         return self.__actors
 
     @actors.setter
@@ -167,9 +223,8 @@ class Movie:
         return self.__genres
 
     @genres.setter
-    def genres(self, genre: Genre):
-        if type(genre) == Genre:
-            self.__genres.append(genre)
+    def genres(self, genre):
+        self.__genres.append(genre)
 
     @property
     def runtime_minutes(self) -> int:
@@ -230,10 +285,7 @@ class Movie:
 
     def __lt__(self, other):
         if type(other) == Movie:
-            if self.__title == other.title:
-                return self.__release_year < other.release_year
-            else:
-                return self.__title < other.title
+            return self.__release_year < other.release_year
 
     def __hash__(self):
         return hash(self.__title + str(self.__release_year))
@@ -261,9 +313,8 @@ class Movie:
         self.__votes += 1
 
 
-
 class Review:
-    def __init__(self, movie: Movie, review_text: str, rating: int):
+    def __init__(self, movie: Movie, review_text: str, user: 'User'):
         if type(movie) == Movie:
             self.__movie = movie
         else:
@@ -272,15 +323,17 @@ class Review:
             self.__review_text = review_text.strip()
         else:
             self.__review_text = None
-        if type(rating) == int and 1 <= rating <= 10:
-            self.__rating = rating
-        else:
-            self.__rating = None
-        self.__timestamp: datetime = datetime.now()
+        self.__rating = None
+        self.__timestamp: datetime = datetime.today()
+        self.__user = user
 
     @property
-    def movie(self) -> Movie:
+    def movie(self):
         return self.__movie
+
+    @property
+    def user(self):
+        return self.__user
 
     @property
     def review_text(self) -> str:
@@ -302,7 +355,6 @@ class Review:
             return False
         return (
                 other.__timestamp == self.__timestamp and
-                other.__movie == self.__movie and
                 other.__review_text == self.__review_text and
                 other.__rating == self.__rating
         )
@@ -402,5 +454,3 @@ class WatchList:
             return movie
         else:
             raise StopIteration
-
-
