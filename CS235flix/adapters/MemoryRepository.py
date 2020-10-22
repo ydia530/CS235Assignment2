@@ -47,6 +47,7 @@ class memoryRepository(AbstractRepository):
 
         return movie
 
+
     def get_number_of_movies(self):
         return len(self._movies)
 
