@@ -27,7 +27,7 @@ def test_user_construction(user):
     assert repr(user) == '<User ydia530>'
 
     for review in user.reviews:
-        # User should have an empty list of Comments after construction.
+        # User should have an empty list of reviews after construction.
         assert False
 
 
@@ -58,7 +58,7 @@ def test_genre_construction(genre):
 
 def test_make_review_relationships(movie, user):
     review_text = "This is a nice Movie"
-    review = make_review(review_text, movie, user)
+    review = make_review(review_text, movie, user, date.today())
 
     assert review in user.reviews
 

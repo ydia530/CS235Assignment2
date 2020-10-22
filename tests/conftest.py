@@ -6,8 +6,8 @@ from CS235flix import create_app
 from CS235flix.adapters import MemoryRepository
 from CS235flix.adapters.MemoryRepository import memoryRepository, populate
 
-TEST_DATA_PATH = 'tests/data/'
-
+TEST_DATA_PATH = os.path.join('/Users', 'diaoyuan', 'Desktop', '235', 'CS235Assignment2', 'tests', 'data')
+#TEST_DATA_PATH = "/Users/diaoyuan/Desktop/235/CS235Assignment2/tests/data"
 
 @pytest.fixture
 def in_memory_repo():
