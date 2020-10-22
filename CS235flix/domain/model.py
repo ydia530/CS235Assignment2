@@ -1,5 +1,4 @@
 from typing import List, Iterable
-from datetime import datetime
 
 
 class ModelException(Exception):
@@ -162,9 +161,9 @@ class Movie:
         self.__rank = None
         self.__poster = None
         self.__reviews: List[Review] = list()
+        self.__rating = None
 
-    def add_review(self, review: 'Review'):
-        self.__reviews.append(review)
+
 
     @property
     def reviews(self) -> Iterable["Review"]:
@@ -247,6 +246,14 @@ class Movie:
             raise ValueError
 
     @property
+    def rating(self) -> float:
+        return self.__rating
+
+    @rating.setter
+    def rating(self, rate):
+        self.__rating = rate
+
+    @property
     def votes(self) -> int:
         return self.__votes
 
@@ -290,6 +297,9 @@ class Movie:
     def __hash__(self):
         return hash(self.__title + str(self.__release_year))
 
+    def add_review(self, review: 'Review'):
+        self.__reviews.append(review)
+
     def add_actor(self, actor: Actor):
         if type(actor) == Actor:
             self.__actors.append(actor)
@@ -314,7 +324,8 @@ class Movie:
 
 
 class Review:
-    def __init__(self, movie: Movie, review_text: str, user: 'User'):
+    def __init__(self, movie: Movie, review_text: str, user: 'User', time):
+        self.__timestamp = time
         if type(movie) == Movie:
             self.__movie = movie
         else:
@@ -324,7 +335,6 @@ class Review:
         else:
             self.__review_text = None
         self.__rating = None
-        self.__timestamp: datetime = datetime.today()
         self.__user = user
 
     @property
@@ -347,6 +357,7 @@ class Review:
     def timestamp(self):
         return self.__timestamp
 
+
     def __repr__(self):
         return f'<{self.__movie} {self.__timestamp}>'
 
@@ -358,6 +369,7 @@ class Review:
                 other.__review_text == self.__review_text and
                 other.__rating == self.__rating
         )
+
 
 
 class User:

@@ -10,7 +10,6 @@ from CS235flix.adapters.repository import AbstractRepository, RepositoryExceptio
 from CS235flix.domain.model import Movie, User, Genre, Review, Actor, ModelException, Director
 
 
-
 class memoryRepository(AbstractRepository):
     # Movies ordered by movie title and year, not rank. rank is assumed unique.
     def __init__(self):
@@ -28,9 +27,16 @@ class memoryRepository(AbstractRepository):
     def get_user(self, username) -> User:
         return next((user for user in self._users if user.user_name == username), None)
 
+    def get_reviews(self):
+        return self._review
+
     def add_movie(self, movie: Movie):
         insort_left(self._movies, movie)
         self._movie_index[movie.rank] = movie
+
+    def add_genre(self, genre:Genre):
+        if genre not in self._genres:
+            self._genres.append(genre)
 
     def get_movie(self, rank: int) -> Movie:
         movie = None
@@ -48,14 +54,15 @@ class memoryRepository(AbstractRepository):
         movie = None
 
         if len(self._movies) > 0:
-            movie = self._movies[0]
+            movie = self._movie_index[self._movies[0].rank]
+
         return movie
 
     def get_last_movie(self):
         movie = None
 
         if len(self._movies) > 0:
-            movie = self._movies[-1]
+            movie = self._movie_index[self.get_number_of_movies()]
         return movie
 
     def get_year_of_previous_movie(self, movie: Movie):
@@ -186,6 +193,8 @@ class memoryRepository(AbstractRepository):
         self._genres.append(genre)
 
     def add_review(self, review):
+        if review.user is None or review.movie is None:
+            raise RepositoryException
         self._review.append(review)
 
     @actor.setter
@@ -220,7 +229,7 @@ def load_movies_and_genre(data_path: str, repo: memoryRepository):
     actors = dict()
     directors = dict()
 
-    for data_row in read_csv_file(os.path.join(data_path, 'Data1000MoviesWithImage.csv')):
+    for data_row in read_csv_file(os.path.join(data_path, 'Data1000MoviesWithImage')):
         movie_genre = data_row[2].split(",")
         movie_actor = data_row[5].split(",")
         director = data_row[4]
@@ -230,6 +239,9 @@ def load_movies_and_genre(data_path: str, repo: memoryRepository):
 
         movie.rank = int(data_row[0])
         movie.description = data_row[3]
+        movie.metascore = data_row[11]
+        movie.votes = int(data_row[9])
+        movie.rating =  float(data_row[8])
 
         if director not in directors:
             directors[director] = list()
@@ -300,12 +312,13 @@ def load_reviews(data_path: str, repo: memoryRepository, users):
             review_text=data_row[3],
             user=users[data_row[1]],
             movie=repo.get_movie(int(data_row[2])),
+            time=data_row[4]
         )
         repo.add_review(review)
 
 
-def make_review(review_text: str, movie: Movie, user: User):
-    review = Review(movie, review_text, user)
+def make_review(review_text: str, movie: Movie, user: User, time):
+    review = Review(movie, review_text, user, time)
     user.add_review(review)
     movie.add_review(review)
 

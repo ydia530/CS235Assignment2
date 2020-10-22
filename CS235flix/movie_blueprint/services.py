@@ -2,6 +2,7 @@ from typing import List, Iterable
 
 from CS235flix.adapters.repository import AbstractRepository
 from CS235flix.domain.model import Movie, User, Genre, Review
+from datetime import datetime
 
 
 class NonExistentmovieException(Exception):
@@ -13,7 +14,7 @@ class UnknownUserException(Exception):
 
 
 def make_review(review_text, user, movie):
-    review = Review(movie, review_text, user)
+    review = Review(movie, review_text, user, datetime.today())
     user.add_review(review)
     movie.add_review(review)
     return review
@@ -109,7 +110,7 @@ def movie_to_dict(movie: Movie):
         'year': movie.release_year,
         'title': movie.title,
         'description': movie.description,
-        'poster' : movie.poster,
+        'poster': movie.poster,
         'review': reviews_to_dict(movie.reviews),
         'genre': genres_to_dict(movie.genres),
         'director': movie.director.director_full_name,
@@ -120,7 +121,6 @@ def movie_to_dict(movie: Movie):
 
 
 def actors_to_string(actors):
-
     a = [actor.actor_full_name for actor in actors]
     return ", ".join(a)
 
@@ -163,4 +163,3 @@ def dict_to_movie(dict):
     movie = Movie(dict.rank, dict.release_year, dict.title)
     # Note there's no reviews or genres.
     return movie
-

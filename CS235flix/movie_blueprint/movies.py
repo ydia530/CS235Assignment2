@@ -29,8 +29,8 @@ def movies_by_year():
     last_movie = services.get_last_movie(repo.repo_instance)
 
     if target_year is None:
-        # No year query parameter, so return movies from day 1 of the series.
-        target_year = first_movie['year']
+        # No year query parameter, so return movies from 2006 of the series.
+        target_year = 2006
     else:
         # Convert target_year from string to year.
         target_year = int(target_year)
@@ -123,7 +123,7 @@ def reviews_on_movie():
         form.movie_rank.data = movie_rank
     else:
         # Request is a HTTP POST where form validation has failed.
-        # Extract the movie id of the movie being reviewed from the form.
+        # Extract the movie rank of the movie being reviewed from the form.
         movie_rank = int(form.movie_rank.data)
 
     # For a GET or an unsuccessful POST, retrieve the movie to review in dict form, and return a Web page that allows
