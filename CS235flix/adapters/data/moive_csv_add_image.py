@@ -2,7 +2,7 @@ import csv
 import requests
 
 with open('Data1000Movies.csv', 'r') as f:
-    with open('Data1000MoviesWithImage.csv', 'w') as ff:
+    with open('Data1000MoviesWithImage', 'w') as ff:
         writer = csv.writer(ff, lineterminator='\n')
         reader = csv.reader(f)
         all = []
