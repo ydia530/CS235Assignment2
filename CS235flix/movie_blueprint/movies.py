@@ -29,8 +29,9 @@ def movies_by_year():
     last_movie = services.get_last_movie(repo.repo_instance)
 
     if target_year is None:
-        # No year query parameter, so return movies from 2006 of the series.
-        target_year = 2006
+        # No year query parameter, so return movies from first year of the series.
+        movie = repo.repo_instance.get_first_movie()
+        target_year = movie.release_year
     else:
         # Convert target_year from string to year.
         target_year = int(target_year)
