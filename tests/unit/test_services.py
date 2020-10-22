@@ -27,7 +27,7 @@ def test_cannot_add_user_with_existing_name(in_memory_repo):
         auth_services.add_user(username, password, in_memory_repo)
 
 
-def test_authentication_with_valid_credentials(in_memory_repo):
+def test_authentication_with_valrank_credentials(in_memory_repo):
     new_username = 'abcd'
     new_password = '1234567'
 
@@ -104,7 +104,7 @@ def test_can_get_movie(in_memory_repo):
     assert 'Adventure' in review_names
 
 
-def test_cannot_get_movie_with_non_existent_id(in_memory_repo):
+def test_cannot_get_movie_with_non_existent_rank(in_memory_repo):
     movie_rank = 100
 
     # Call the service layer to attempt to retrieve the Movie.
@@ -145,7 +145,7 @@ def test_get_movies_by_year_with_multiple_years(in_memory_repo):
     # Check that there are 1 movies at 2012.
     assert len(movies_as_dict) == 1
 
-    # Check that the movie ids for the the movies returned are 3, 4 and 5.
+    # Check that the movie ranks for the the movies returned are 3, 4 and 5.
     movie_ranks = [movie['rank'] for movie in movies_as_dict]
     assert {1}.issubset(movie_ranks)
 
@@ -163,7 +163,7 @@ def test_get_movies_by_year_with_non_existent_year(in_memory_repo):
     assert len(movies_as_dict) == 0
 
 
-def test_get_movies_by_id(in_memory_repo):
+def test_get_movies_by_rank(in_memory_repo):
     target_movie_ranks = [1,2,20]
     movies_as_dict = movie_services.get_movies_by_rank(target_movie_ranks, in_memory_repo)
 
