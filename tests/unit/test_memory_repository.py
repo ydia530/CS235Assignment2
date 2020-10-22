@@ -97,7 +97,7 @@ def test_repository_can_get_last_movie(in_memory_repo):
     assert movie.title == 'Fantastic Beasts and Where to Find Them'
 
 
-def test_repository_can_get_movies_by_ids(in_memory_repo):
+def test_repository_can_get_movies_by_ranks(in_memory_repo):
     movies = in_memory_repo.get_movies_by_rank([2, 5])
 
     assert len(movies) == 2
@@ -106,7 +106,7 @@ def test_repository_can_get_movies_by_ids(in_memory_repo):
     assert movies[1].title == "Suicranke Squad"
 
 
-def test_repository_does_not_retrieve_movie_for_non_existent_id(in_memory_repo):
+def test_repository_does_not_retrieve_movie_for_non_existent_rank(in_memory_repo):
     movies = in_memory_repo.get_movies_by_rank([2, 12])
 
     assert len(movies) == 1
@@ -120,16 +120,16 @@ def test_repository_returns_an_empty_list_for_non_existent_ranks(in_memory_repo)
     assert len(movies) == 0
 
 
-def test_repository_returns_movie_ids_for_existing_genre(in_memory_repo):
-    movie_ids = in_memory_repo.get_movie_ranks_for_genre('Action')
+def test_repository_returns_movie_ranks_for_existing_genre(in_memory_repo):
+    movie_ranks = in_memory_repo.get_movie_ranks_for_genre('Action')
 
-    assert movie_ids == [1, 5, 6,9]
+    assert movie_ranks == [1, 5, 6,9]
 
 
 def test_repository_returns_an_empty_list_for_non_existent_genre(in_memory_repo):
-    movie_ids = in_memory_repo.get_movie_ranks_for_genre('dajia')
+    movie_ranks = in_memory_repo.get_movie_ranks_for_genre('dajia')
 
-    assert len(movie_ids) == 0
+    assert len(movie_ranks) == 0
 
 
 def test_repository_returns_year_of_previous_movie(in_memory_repo):
