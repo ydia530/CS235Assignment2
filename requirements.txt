@@ -1,7 +1,10 @@
 Flask==1.1.2
-flask-wtf==0.14.2
-python-dotenv==0.13.0
-Werkzeug==0.16.0
+flask-wtf==0.14.3
+python-dotenv==0.14.0
+Werkzeug==1.0.1
 
 WTForms~=2.3.3
 requests~=2.24.0
+Jinja2>=2.11.2
+itsdangerous>=1.1.0
+
