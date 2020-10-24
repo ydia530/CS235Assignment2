@@ -45,7 +45,7 @@ Testing requires that file *CS235Assignment2/tests/conftest.py* be edited to set
 
 E.g. 
 
-`TEST_DATA_PATH = os.path.join('/Users', 'diaoyuan', 'Desktop', '235', 'CS235Assignment2', 'tests', 'data')`
+`TEST_DATA_PATH = os.path.join('/Users', os.sep, 'diaoyuan', 'Desktop', '235', 'CS235Assignment2', 'tests', 'data')`
 
 assigns TEST_DATA_PATH with the following value (the use of os.path.join and os.sep ensures use of the correct platform path separator):
 
@@ -53,4 +53,5 @@ assigns TEST_DATA_PATH with the following value (the use of os.path.join and os.
 
 You can then run tests from within PyCharm.
 
+Or you can run ‘python –m pytest’ from within the virtual environment in a terminal window
  
