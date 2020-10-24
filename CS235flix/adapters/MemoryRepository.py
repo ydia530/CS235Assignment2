@@ -47,7 +47,6 @@ class memoryRepository(AbstractRepository):
 
         return movie
 
-
     def get_number_of_movies(self):
         return len(self._movies)
 
@@ -233,6 +232,8 @@ def load_movies_and_genre(data_path: str, repo: memoryRepository):
     for data_row in read_csv_file(os.path.join(data_path, 'Data1000MoviesWithImage')):
         movie_genre = data_row[2].split(",")
         movie_actor = data_row[5].split(",")
+        movie_actor = map(lambda x:x.strip(), movie_actor)
+        movie_genre = map(lambda x: x.strip(), movie_genre)
         director = data_row[4]
 
         # Create Movie object.
